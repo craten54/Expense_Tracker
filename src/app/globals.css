@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Pastikan ini ada supaya font dan warna default Next.js bersih */
+:root {
+    --background: #f8fafc;
+    /* Slate 50 */
+    --foreground: #0f172a;
+    /* Slate 900 */
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: sans-serif;
+}
