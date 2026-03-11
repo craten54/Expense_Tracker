@@ -1,0 +1,75 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  username      String?       @unique
+  email         String?       @unique
+  password      String?       // Opsional untuk Google Login
+  image         String?       // Foto profil Google
+  createdAt     DateTime      @default(now())
+  
+  wallets       Wallet[]
+  transactions  Transaction[]
+  categories    Category[]
+}
+
+model Wallet {
+  id        Int      @id @default(autoincrement())
+  name      String   // BCA, Mandiri, GoPay, OVO, Cash, dll
+  type      String   @default("CASH") // BANK, E-WALLET, CASH
+  balance   Float    @default(0.0)
+  
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relasi transaksi (sebagai sumber/tujuan)
+  transactions      Transaction[] @relation("WalletTransactions")
+  incomingTransfers Transaction[] @relation("WalletIncomingTransfers")
+}
+
+model Category {
+  id           Int           @id @default(autoincrement())
+  name         String        // Makanan, Fashion, Transport, dll
+  
+  userId       Int?          // Milik user tertentu
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  transactions Transaction[]
+
+  // Kunci agar user tidak punya nama kategori ganda, tapi antar user boleh sama
+  @@unique([name, userId]) 
+}
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  amount      Float
+  type        String   // INCOME, EXPENSE, TRANSFER
+  description String?
+  
+  // Tanggal transaksi (penting untuk Filter 2026 vs 2028 & Recap Akhir Tahun)
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Wallet asal
+  walletId    Int
+  wallet      Wallet   @relation("WalletTransactions", fields: [walletId], references: [id])
+  
+  // Wallet tujuan (Hanya jika type === "TRANSFER")
+  toWalletId  Int?
+  toWallet    Wallet?  @relation("WalletIncomingTransfers", fields: [toWalletId], references: [id])
+
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id])
+}
