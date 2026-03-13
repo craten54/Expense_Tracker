@@ -1,44 +1,30 @@
-"use client"
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import AuthProvider from "@/components/AuthProvider";
 
-function Navbar() {
-    const { data: session } = useSession();
+const inter = Inter({ subsets: ["latin"] });
 
-    return (
-        <nav className="bg-white border-b border-slate-200 px-10 py-4 flex justify-between items-center sticky top-0 z-50">
-        <Link href="/" className="font-bold text-xl text-blue-600 tracking-tighter">ET-Pareto 📈</Link>
-        <div className="flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-blue-600">Home</Link>
-            <Link href="/dashboard" className="text-sm font-medium text-slate-600 hover:text-blue-600">Dashboard</Link>
-            
-            {session ? (
-            <button 
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-100 transition-colors"
-            >
-                Logout ({session.user?.name})
-            </button>
-            ) : (
-            <Link href="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold">
-                Login
-            </Link>
-            )}
-        </div>
-        </nav>
-    );
-    }
+export const metadata: Metadata = {
+    title: "CashMap",
+    icons: {
+    icon: "/logos/cashmap.png", // Arahkan ke lokasi logo kamu di folder public
+    },
+    };
 
-    export default function RootLayout({ children }: { children: React.ReactNode }) {
+    export default function RootLayout({
+    children,
+    }: {
+    children: React.ReactNode;
+    }) {
     return (
         <html lang="id">
-        <body className="antialiased">
-            <SessionProvider>
-            <Navbar />
+        <body className={`${inter.className} antialiased`}>
+            <AuthProvider>
+            {/* Navbar sudah dihapus dari sini agar tidak "bocor" ke Dashboard */}
             {children}
-            </SessionProvider>
+            </AuthProvider>
         </body>
         </html>
     );
-    }
+}

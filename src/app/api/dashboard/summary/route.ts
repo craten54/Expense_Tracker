@@ -7,15 +7,10 @@ export async function GET() {
     try {
         const session = await getServerSession(authOptions);
 
-        // 1. Cek session dan email (sebagai fallback ID)
         if (!session?.user?.email) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        /** * 2. Ambil userId dengan aman.
-         * Jika TS merah di 'session.user.id', kita ambil ID langsung dari DB berdasarkan email.
-         * Ini jauh lebih akurat dan mencegah data tertukar jika ada isu session.
-         */
         const user = await prisma.user.findUnique({
             where: { email: session.user.email },
             select: { id: true }
@@ -27,25 +22,27 @@ export async function GET() {
 
         const userId = user.id;
 
-        // 3. Agregasi saldo (Hanya milik userId ini)
-        const totalBalance = await prisma.wallet.aggregate({
-            _sum: { balance: true },
-            where: { userId: userId } 
-        });
-
-        // 4. Ambil rincian per wallet (opsional, tapi berguna untuk Dashboard)
+        // Ambil rincian per wallet (WAJIB SERTAKAN ID)
         const wallets = await prisma.wallet.findMany({
             where: { userId: userId },
-            select: { name: true, balance: true, type: true }
+            select: { 
+                id: true,      // <-- TAMBAHKAN INI (Crucial buat dropdown)
+                name: true, 
+                balance: true, 
+                type: true 
+            }
         });
 
-        return NextResponse.json({ 
-            balance: totalBalance._sum.balance || 0,
-            walletDetails: wallets
+        // Hitung total saldo secara manual agar formatnya angka bersih
+        const totalAmount = wallets.reduce((acc, curr) => acc + curr.balance, 0);
+
+        return NextResponse.json({
+            balance: totalAmount,    // Return angka bersih (misal: 1000000)
+            walletDetails: wallets   // Return array wallet lengkap dengan ID
         });
 
     } catch (error) {
         console.error("Dashboard Error:", error);
-        return NextResponse.json({ error: "Gagal memuat data saldo" }, { status: 500 });
+        return NextResponse.json({ error: "Gagal memuat data" }, { status: 500 });
     }
 }

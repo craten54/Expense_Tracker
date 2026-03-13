@@ -189,7 +189,6 @@ async function POST(req) {
             subject: "Reset Password Akun ET-Pareto",
             html: `
                 <div style="font-family: sans-serif; padding: 20px;">
-                    {/* 3. Gunakan user.username di sini */}
                     <h2>Halo, ${user.username}!</h2>
                     <p>Kamu meminta reset password untuk akun <b>ET-Pareto</b> kamu. Klik tombol di bawah untuk lanjut:</p>
                     <a href="${resetUrl}" style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;">Reset Password</a>

@@ -31,7 +31,7 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#0f172a] p-4">
             <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm">
-                <h1 className="text-2xl font-bold mb-6 text-slate-800 text-center">Login ET-Pareto</h1>
+                <h1 className="text-2xl font-bold mb-6 text-slate-800 text-center">Login</h1>
                 
                 <form onSubmit={handleLogin} className="space-y-4">
                     {/* Input Identifier (Email/Username) */}

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Check, X } from "lucide-react"; 
+import { Eye, EyeOff, Check, X } from "lucide-react";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -131,7 +131,7 @@ export default function RegisterPage() {
                         )}
                     </div>
 
-                    <button 
+                    <button
                         disabled={!isAllMet || !isMatch}
                         className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition duration-200 disabled:bg-slate-300 disabled:cursor-not-allowed shadow-md"
                     >
