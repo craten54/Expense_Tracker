@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "CashMap",
     icons: {
-    icon: "/logos/cashmap.png", // Arahkan ke lokasi logo kamu di folder public
+    icon: "/logos/cashmap_logo.png", // Arahkan ke lokasi logo kamu di folder public
     },
     };
 

@@ -24,7 +24,7 @@ export default function LandingPage() {
       {/* 1. NAVBAR */}
       <nav className={`max-w-7xl mx-auto px-6 py-6 flex justify-between items-center sticky top-0 z-50 backdrop-blur-md transition-colors ${isDark ? "bg-[#0B0F1A]/80 border-b border-white/5" : "bg-white/80 border-b border-slate-100"}`}>
         <div className="flex items-center gap-2">
-          <img src="/logos/cashmap.png" alt="Logo" className="w-9 h-9" />
+          <img src="/logos/cashmap_logo.png" alt="Logo" className="w-9 h-9" />
           <span className="text-xl font-bold tracking-tight">
             CashMap
           </span>

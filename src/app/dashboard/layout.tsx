@@ -40,7 +40,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {/* Logo CashMap di Sidebar */}
                 <div className="p-6 border-b border-slate-100 flex items-center gap-3">
                     <img
-                        src="/logos/cashmap.png" // Pastikan file ada di folder public
+                        src="/logos/cashmap_logo.png" // Pastikan file ada di folder public
                         alt="CashMap Logo"
                         className="w-12 h-12 object-contain"
                         onError={(e) => {
