@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///E:/Semester%206/Expense_Tracker/src/components/AuthProvider.tsx"],"sourcesContent":["\"use client\";\nimport { SessionProvider } from \"next-auth/react\";\n\nexport default function AuthProvider({ children }: { children: React.ReactNode }) {\n    return <SessionProvider>{children}</SessionProvider>;\n}"],"names":[],"mappings":";;;;;AACA;AADA;;;AAGe,SAAS,aAAa,EAAE,QAAQ,EAAiC;IAC5E,qBAAO,8OAAC,iKAAe;kBAAE;;;;;;AAC7B"}}]
-}
