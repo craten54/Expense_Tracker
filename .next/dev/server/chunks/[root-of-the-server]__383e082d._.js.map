@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///E:/Semester%206/Expense_Tracker/src/app/api/forgot-password/route.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\n\nexport async function POST(req: Request) {\n    try {\n        const body = await req.json();\n        console.log(\"Email masuk:\", body.email);\n        \n        // Logika nodemailer kamu di sini...\n        \n        return NextResponse.json({ message: \"Berhasil\" }, { status: 200 });\n    } catch (error) {\n        return NextResponse.json({ error: \"Gagal\" }, { status: 500 });\n    }\n    }"],"names":[],"mappings":";;;;AAAA;;AAEO,eAAe,KAAK,GAAY;IACnC,IAAI;QACA,MAAM,OAAO,MAAM,IAAI,IAAI;QAC3B,QAAQ,GAAG,CAAC,gBAAgB,KAAK,KAAK;QAEtC,oCAAoC;QAEpC,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAAW,GAAG;YAAE,QAAQ;QAAI;IACpE,EAAE,OAAO,OAAO;QACZ,OAAO,gJAAY,CAAC,IAAI,CAAC;YAAE,OAAO;QAAQ,GAAG;YAAE,QAAQ;QAAI;IAC/D;AACA"}}]
-}

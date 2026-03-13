@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///E:/Semester%206/Expense_Tracker/src/lib/prisma.ts"],"sourcesContent":["// src/lib/prisma.ts\nimport { PrismaClient } from '@prisma/client'\n\nconst globalForPrisma = global as unknown as { prisma: PrismaClient }\n\nexport const prisma = globalForPrisma.prisma || new PrismaClient()\n\nif (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma"],"names":[],"mappings":";;;;AAAA,oBAAoB;AACpB;;AAEA,MAAM;AAEC,MAAM,SAAS,gBAAgB,MAAM,IAAI,IAAI,sMAAY;AAEhE,wCAA2C,gBAAgB,MAAM,GAAG"}}]
-}
