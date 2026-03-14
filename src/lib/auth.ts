@@ -39,16 +39,43 @@ export const authOptions: NextAuthOptions = {
     ],
 
     callbacks: {
+        async signIn({ user, account }) {
+            // KHUSUS LOGIN GOOGLE
+            if (account?.provider === "google") {
+                const existingUser = await prisma.user.findUnique({
+                    where: { email: user.email as string },
+                });
+
+                // Kalau user belum ada di Supabase, kita buatin sekarang
+                if (!existingUser) {
+                    await prisma.user.create({
+                        data: {
+                            email: user.email,
+                            username: user.name, // atau user.email?.split('@')[0]
+                            image: user.image,
+                        },
+                    });
+                }
+            }
+            return true; // Izinkan login lanjut
+        },
+
         async jwt({ token, user, trigger, session }) {
-            // 1. Saat pertama kali login, masukkan data dari database ke token
+            // Jika ini login pertama kali atau via Google
             if (user) {
-                token.id = user.id;
-                token.name = user.name;
-                token.email = user.email;
-                token.picture = (user as any).image; // NextAuth pakai field 'picture' di dalam JWT
+                // Cari data asli di DB biar dapet ID Integer-nya
+                const dbUser = await prisma.user.findUnique({
+                    where: { email: user.email as string }
+                });
+
+                if (dbUser) {
+                    token.id = dbUser.id; // Ini ID Integer dari Supabase
+                    token.name = dbUser.username;
+                    token.email = dbUser.email;
+                    token.picture = dbUser.image;
+                }
             }
 
-            // 2. Jika ada update profil (setelah klik Simpan Perubahan), update token-nya
             if (trigger === "update" && session) {
                 token.name = session.name;
                 token.picture = session.image;
@@ -56,13 +83,13 @@ export const authOptions: NextAuthOptions = {
 
             return token;
         },
+
         async session({ session, token }) {
             if (session.user) {
-                // Ambil data dari token (JWT) dan pindahkan ke session (Frontend)
                 (session.user as any).id = token.id;
                 (session.user as any).name = token.name;
                 (session.user as any).email = token.email;
-                (session.user as any).image = token.picture; // Balikin ke 'image' buat Frontend
+                (session.user as any).image = token.picture;
             }
             return session;
         }
