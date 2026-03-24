@@ -1,4 +1,4 @@
-# <img src="logos/cashmap_logo.png" alt="CashMap Logo" width="40" height="40" align="center"> CashMap - Smart Financial Intelligence
+# <img src="./public/logos/cashmap_logo.png" alt="CashMap Logo" width="40" height="40" align="center"> CashMap - Smart Financial Intelligence
 
 **CashMap** adalah aplikasi manajemen keuangan modern yang dirancang untuk memberikan kendali penuh atas arus kas pribadi Anda. Dengan antarmuka yang bersih dan fitur pelacakan *real-time*, CashMap membantu pengguna memetakan setiap rupiah, mengelola berbagai dompet digital, dan menganalisis kebiasaan belanja secara cerdas.
 
