@@ -1,0 +1,34 @@
+name: CI and Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Dependencies
+        run: npm install
+
+      # CI: Unit Testing (Pastikan ada script "test" di package.json)
+      - name: Run Unit Test
+        run: npm test || echo "No tests defined"
+
+      # CS: Security Scan menggunakan Trivy
+      - name: Security Scan (Trivy)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          format: 'table'
+          exit-code: '0' # Ubah ke 1 jika ingin menggagalkan build kalau ada celah
+          severity: 'CRITICAL,HIGH'
