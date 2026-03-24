@@ -31,6 +31,30 @@ Aplikasi ini dibangun menggunakan teknologi mutakhir untuk menjamin performa dan
 
 CashMap dikembangkan dengan mengikuti standar industri untuk memastikan kualitas kode dan kemudahan skalabilitas:
 
+## 📡 Dokumentasi API (Endpoints)
+
+Guna memenuhi standar **RESTful API**, CashMap menyediakan beberapa *endpoint* utama untuk manajemen data transaksi:
+
+| Method | Endpoint | Deskripsi | Format Response |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/expenses` | Mengambil seluruh riwayat transaksi pengguna | JSON |
+| **POST** | `/api/expenses` | Menambahkan catatan pengeluaran baru | JSON |
+| **PUT** | `/api/expenses/[id]` | Memperbarui data transaksi berdasarkan ID | JSON |
+| **DELETE** | `/api/expenses/[id]` | Menghapus data transaksi dari database | JSON |
+
+### 📥 Contoh Response (Success)
+```json
+{
+  "status": "success",
+  "data": {
+    "id": "clt12345",
+    "amount": 50000,
+    "category": "Food & Beverage",
+    "description": "Nasi Padang Siang Hari"
+  }
+}
+```
+
 ### 🐳 Containerization dengan Docker
 Proyek ini telah dikontainerisasi menggunakan Docker untuk menjamin lingkungan pengembangan yang konsisten.
 * **Port Default**: `8000`
@@ -88,4 +112,4 @@ Pengembangan dilakukan menggunakan standarisasi branch `main`, `develop`, dan `f
 
 ## 👤 Author
 **Stan Fredheric**
-*Informatics Engineering Student - Universitas Padjadjaran*
+*Informatics Engineering Student - Padjadjaran University*
