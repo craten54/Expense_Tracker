@@ -40,6 +40,7 @@ Proyek ini telah dikontainerisasi menggunakan Docker untuk menjamin lingkungan p
     ```
 
 ### ⚙️ Otomatisasi CI/CD & Continuous Security (CS)
+[![CI and Security Scan](https://github.com/craten54/Expense_Tracker/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/craten54/Expense_Tracker/actions/workflows/main.yml)
 Kami mengintegrasikan **GitHub Actions** untuk menjaga integritas aplikasi di setiap perubahan kode:
 * **Continuous Integration (CI)**: Menjalankan unit testing dan validasi struktur kode secara otomatis pada setiap *push* atau *pull request*.
 * **Continuous Security (CS)**: Pemindaian keamanan otomatis untuk mendeteksi kerentanan pada dependensi pihak ketiga (Security Vulnerability Scanning).

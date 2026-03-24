@@ -4,23 +4,28 @@ on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ] # Ditambah develop biar PR antar branch tetap ke-scan
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
+      - uses: actions/checkout@v4 # Update ke v4
+
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # Update ke v4
         with:
           node-version: '18'
-          
+          cache: 'npm' # Menambah cache biar install lebih cepat
+
       - name: Install Dependencies
         run: npm install
 
-      # CI: Unit Testing (Pastikan ada script "test" di package.json)
+      # PENTING: Generate Prisma Client agar testing tidak error
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # CI: Unit Testing
       - name: Run Unit Test
         run: npm test || echo "No tests defined"
 
@@ -30,5 +35,5 @@ jobs:
         with:
           scan-type: 'fs'
           format: 'table'
-          exit-code: '0' # Ubah ke 1 jika ingin menggagalkan build kalau ada celah
+          exit-code: '0'
           severity: 'CRITICAL,HIGH'
