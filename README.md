@@ -112,4 +112,4 @@ Pengembangan dilakukan menggunakan standarisasi branch `main`, `develop`, dan `f
 
 ## 👤 Author
 **Stan Fredheric**
-*Informatics Engineering Student - Universitas Padjadjaran*
+*Informatics Engineering Student - Padjadjaran University*
