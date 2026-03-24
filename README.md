@@ -43,17 +43,82 @@ Guna memenuhi standar **RESTful API**, CashMap menyediakan beberapa *endpoint* u
 | **DELETE** | `/api/expenses/[id]` | Menghapus data transaksi dari database | JSON |
 
 ### 📥 Contoh Response (Success)
+**a. GET /api/expenses**
+* **Fungsi:** Mendapatkan semua daftar riwayat pengeluaran.
+* **Success Response (200 OK):**
 ```json
 {
   "status": "success",
-  "data": {
-    "id": "clt12345",
-    "amount": 50000,
-    "category": "Food & Beverage",
-    "description": "Nasi Padang Siang Hari"
-  }
+  "data": [
+    {
+        "id": "clt1",
+        "amount": 50000,
+        "category": "Food",
+        "description": "Nasi Padang"
+    }
+  ]
 }
 ```
+
+**b. GET /api/expenses/:id**
+* **Fungsi:** Mendapatkan rincian pengeluaran berdasarkan ID.
+* **Success Response (200 OK):**
+```JSON
+{
+  "status": "success",
+  "data":
+    {
+        "id": "clt1",
+        "amount": 50000,
+        "category": "Food"
+    }
+}
+```
+* **Error Response (404 Not Found):**
+```JSON
+{
+    "status": "error",
+    "message": "Expense ID not found"
+}
+```
+
+**c. POST /api/expenses**
+* **Fungsi: Menambahkan catatan pengeluaran baru.**
+* **Request Body: { "amount": 25000, "category": "Transport" }**
+* **Success Response (201 Created):**
+```JSON
+{
+  "status": "success",
+  "data":
+    {
+        "id": "clt2",
+        "amount": 25000,
+        "category": "Transport"
+    }
+}
+```
+
+**d. PUT /api/expenses/:id**
+* **Fungsi: Memperbarui data pengeluaran berdasarkan ID.**
+* **Request Body: { "amount": 30000 }**
+* **Success Response (200 OK):**
+```JSON
+{
+    "status": "success",
+    "message": "Updated successfully"
+}
+```
+
+**e. DELETE /api/expenses/:id**
+* **Fungsi: Menghapus data pengeluaran berdasarkan ID.**
+* **Success Response (200 OK):**
+```JSON
+{
+    "status": "success",
+    "message": "Deleted successfully"
+}
+```
+
 
 ### 🐳 Containerization dengan Docker
 Proyek ini telah dikontainerisasi menggunakan Docker untuk menjamin lingkungan pengembangan yang konsisten.
