@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+// Perhatikan tipe datanya: params sekarang harus Promise
 export async function DELETE(
-    req: Request,
-    { params }: { params: { id: string } }
+    request: NextRequest,
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
         const session = await getServerSession(authOptions);
@@ -13,25 +14,21 @@ export async function DELETE(
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // 1. Await params (Penting untuk Next.js versi terbaru)
-        const { id } = await params;
+        // 1. WAJIB di-await sesuai pesan error tadi
+        const { id } = await context.params;
         const walletId = parseInt(id);
 
         if (isNaN(walletId)) {
             return NextResponse.json({ error: "ID tidak valid" }, { status: 400 });
         }
 
-        // 2. Cari user untuk verifikasi kepemilikan
         const user = await prisma.user.findUnique({
             where: { email: session.user.email },
         });
 
-        if (!user) {
-            return NextResponse.json({ error: "User tidak ditemukan" }, { status: 404 });
-        }
+        if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-        // 3. Gunakan deleteMany agar bisa memverifikasi userId dalam satu query
-        // Ini mencegah user A menghapus wallet milik user B via URL
+        // 2. Eksekusi hapus
         const deleteResult = await prisma.wallet.deleteMany({
             where: {
                 id: walletId,
@@ -43,9 +40,9 @@ export async function DELETE(
             return NextResponse.json({ error: "Akun tidak ditemukan atau bukan milik Anda" }, { status: 404 });
         }
 
-        return NextResponse.json({ message: "Akun berhasil dihapus" });
+        return NextResponse.json({ message: "Wallet berhasil dihapus" });
     } catch (error) {
         console.error("Delete Error:", error);
-        return NextResponse.json({ error: "Terjadi kesalahan server" }, { status: 500 });
+        return NextResponse.json({ error: "Gagal menghapus akun" }, { status: 500 });
     }
 }
